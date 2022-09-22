@@ -18,7 +18,7 @@ export interface QuestAddresses {
     gardeningJewelUsdc: string;
     gardeningJewelXJewel: string;
     miningGold: string;
-    miningJewel: string;
+    miningLocked: string;
     wishingWell: string;
     strength: string;
     agility: string;

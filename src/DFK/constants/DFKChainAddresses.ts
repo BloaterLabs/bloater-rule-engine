@@ -28,7 +28,7 @@ export class DFKChainAddresses implements Addresses {
         gardeningJewelUsdc: "0xaac3933Faa3B668304C9276d10CA88853463BD42",
         gardeningJewelXJewel: "0xd3d8ff8e42C2eD51FabE4BA34080C6ac79395f24",
         miningGold: "0x75912145f5cFEfb980616FA47B2f103210FaAb94",
-        miningJewel: "0x98b3C85ac3cC3EF36Ff25A9229857AbACE3e7410",
+        miningLocked: "0x98b3C85ac3cC3EF36Ff25A9229857AbACE3e7410",
         wishingWell: null,
         strength: "0xb8828c687Fb1C875D5acb4281C5CDf9F49fA4637",
         agility: "0x801b7296f106d8818DA1D04Ed769e5a76e8911fe",
