@@ -1,0 +1,30 @@
+{
+  "name": "bloater-rule-engine",
+  "version": "1.0.0",
+  "description": "Implementation of a json rules engine with main purpose of automation.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BloaterLabs/bloater-rule-engine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BloaterLabs/bloater-rule-engine/issues"
+  },
+  "homepage": "https://github.com/BloaterLabs/bloater-rule-engine#readme",
+  "dependencies": {
+    "ethers": "^5.6.9",
+    "json-rules-engine": "^6.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.1"
+  }
+}
