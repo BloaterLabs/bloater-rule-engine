@@ -1,12 +1,12 @@
 import { ethers, Wallet } from 'ethers';
 import { Engine, Fact, RuleProperties } from 'json-rules-engine';
-import { ActiveQuest } from './DFK/models/ActiveQuest';
 import { QuestCore } from './DFK/QuestCore';
 import { HeroCore } from './DFK/HeroCore';
 import { Hero } from './DFK/models/Hero';
 import { Config } from './DFK/models/Config';
 import { Addresses } from './DFK/models/Addresses/Addresses';
 import { DFKChainAddresses } from './DFK/constants/DFKChainAddresses';
+import { Quest } from './DFK/models';
 
 export class Ruler {
     private questCore: QuestCore;
@@ -55,7 +55,7 @@ export class Ruler {
 
         this.rulesEngine.on('dfk-heroes-complete-quest', async (params, almanac, ruleResult) => {
             // todo: probably a cleaner way to do this. I can see this being flaky providing parameter like this.
-            almanac.factValue('dfk-heroes-questing',  { address: params["address"] }).then((activeQuests: ActiveQuest[]) => {
+            almanac.factValue('dfk-heroes-questing',  { address: params["address"] }).then((activeQuests: Quest[]) => {
                 this.completeQuests(activeQuests, this.wallet);
             });
         });
@@ -99,8 +99,8 @@ export class Ruler {
      * 
      */
     // todo: move out.
-    private async getQuestingHeroes(address: string): Promise<ActiveQuest[]> {
-        const questCompleters = await this.questCore.getCompletedQuests(address);
+    private async getQuestingHeroes(address: string): Promise<Quest[]> {
+        const questCompleters = await this.questCore.getCompletableQuests(address);
         return questCompleters;
     }
 
@@ -110,11 +110,11 @@ export class Ruler {
         return heroes;
     }
 
-    private async completeQuests(completedQuests: ActiveQuest[], wallet: Wallet): Promise<void> {
+    private async completeQuests(completedQuests: Quest[], wallet: Wallet): Promise<void> {
         //completedQuests.forEach(async (completedQuest) => {
         //Promise.all(completedQuests.map(async (completedQuest: ActiveQuest) => {
         for (const completedQuest of completedQuests) {
-            console.log(`completing ${completedQuest.quest} quest for ${completedQuest.heroes} on ${completedQuest.completeAt}`);
+            console.log(`completing ${completedQuest.name} quest for ${completedQuest.heroes} on ${completedQuest.completeAt}`);
 
             await this.questCore.completeQuest(completedQuest.heroes[0]);
         }
