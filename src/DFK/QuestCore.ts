@@ -156,7 +156,7 @@ export class QuestCore {
             console.log(`got receipt ${receipt.transactionHash}`);
         } catch(ex) {
             //console.log(ex);
-            console.log(`Error completing quest Code: ${ex.error?.code}, Reason: ${ex.error?.reason}, Method: ${ex.error?.method}`);
+            console.log(`Error starting quest Code: ${ex.error?.code}, Reason: ${ex.error?.reason}, Method: ${ex.error?.method}`);
         }
     }
 
