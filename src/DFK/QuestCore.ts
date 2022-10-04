@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/providers";
-import { BigNumber, Contract, ContractReceipt, Wallet } from "ethers"
+import { BigNumber, Contract, ContractReceipt, Event, Wallet } from "ethers"
 
 import questCoreV2abi = require('./abis/QuestCoreV2.1.json');
 import { Addresses } from "./models/Addresses/Addresses";
@@ -41,6 +41,22 @@ export class QuestCore {
         const activeQuests = await this.questCoreContract.getAccountActiveQuests(address);        
         
         return activeQuests.map((ac: any) => new Quest(ac, this.addresses.questAddresses));
+    }
+
+    async getQuestCompletedEvents(address: string, fromBlock: number, toBlock: number): Promise<Quest[]> {
+        const filterQuestCompleted = this.questCoreContract.filters.QuestCompleted(null, address);
+
+        const questsCompleted = await this.questCoreContract.queryFilter(filterQuestCompleted, fromBlock, toBlock);
+
+        return await this.convertQuestEventsToQuests(questsCompleted);
+    }
+
+    async getQuestStartedEvents(address: string, fromBlock: number, toBlock: number): Promise<Quest[]> {
+        const filterQuestStarted = this.questCoreContract.filters.QuestStarted(null, address);
+
+        const questsStarted = await this.questCoreContract.queryFilter(filterQuestStarted, fromBlock, toBlock);
+        
+        return await this.convertQuestEventsToQuests(questsStarted);
     }
 
     async getCompletableQuests(address: string): Promise<Quest[]> {
@@ -142,6 +158,81 @@ export class QuestCore {
             //console.log(ex);
             console.log(`Error completing quest Code: ${ex.error?.code}, Reason: ${ex.error?.reason}, Method: ${ex.error?.method}`);
         }
+    }
+
+    onQuestCompleted(address: string, callback: (quest: Quest) => void): void {
+        const filterQuestStarted = this.questCoreContract.filters.QuestCompleted(null, address);
+        const transactionHashes: string[] = [];
+
+        // note: not sure if right argument names here, but I need the 5th one.
+        this.questCoreContract.on(filterQuestStarted, async (from, to, amount, eventArgs, event: Event) => {
+
+            // need to check for dupes because this fires for every hero in quest.
+            if (transactionHashes.indexOf(event.transactionHash) >= 0) {
+                // we've seen this transaction before. skip it.
+                return;
+            }
+
+            transactionHashes.push(event.transactionHash);
+
+            const receipt = await event.getTransactionReceipt();
+            const quest = this.parseQuestReceipt(receipt);
+
+            // todo: cleaner way to make sure the transactionHashes array doesn't get too long?
+            // Better way to check for dupes or a way around this?
+            if (transactionHashes.length > 50) {
+                transactionHashes.shift();
+            }
+
+            callback(quest);
+        });
+    }
+
+    /**
+     * This method is to give ability for a callback to be called when the QuestStarted event is raised for the passed in address.
+     */
+    onQuestStarted(address: string, callback: (quest: Quest) => void): void {
+        const filterQuestStarted = this.questCoreContract.filters.QuestStarted(null, address);
+        const questIds = [];
+
+        // note: not sure if right argument names here, but I need the 4th one.
+        this.questCoreContract.on(filterQuestStarted, async (from, to, amount, eventArgs) => {
+            const quest = new Quest(eventArgs, this.addresses.questAddresses);
+
+            // need to check for dupes because this fires for every hero in quest.
+            if (questIds.indexOf(quest.id.toNumber()) >= 0) {
+                return;
+            }
+
+            // todo: cleaner way to make sure the questIds array doesn't get too long?
+            // Better way to check for dupes or a way around this?
+            if (questIds.length > 50) {
+                questIds.shift();
+            }
+
+            questIds.push(quest.id.toNumber());
+            callback(quest);
+        });
+    }
+
+    private async convertQuestEventsToQuests(questEvents: Event[]): Promise<Quest[]> {
+        const quests: Quest[] = [];
+        const transactionHashes = [];
+        for (const questEvent of questEvents) {
+            if (transactionHashes.indexOf(questEvent.transactionHash) >= 0) {
+                // we've seen this transaction before. Skip it.
+                continue;
+            }
+
+            transactionHashes.push(questEvent.transactionHash);
+
+            const receipt = await questEvent.getTransactionReceipt();
+            const quest = this.parseQuestReceipt(receipt);
+
+            quests.push(quest);
+        }
+
+        return quests;
     }
 
     private getCreateHeroReward(rewards: QuestReward[], heroId: BigNumber) {
