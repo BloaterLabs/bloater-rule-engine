@@ -20,8 +20,6 @@ export interface Hero {
 
   id: number;
 
-  maxStamina: number;
-
   name: string;
 
   profession: typeof Profession;

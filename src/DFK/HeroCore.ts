@@ -65,7 +65,6 @@ export class HeroCore {
       bestTrainingStatValue: bestTraining.value,
       currentStamina: this.getCurrentStamina(staminaFullAt, heroStats.stamina),
       id: heroId,
-      maxStamina: heroOriginal.info.stamina,
       name: `${heroOriginal.info.firstName} ${heroOriginal.info.lastName}`,
       profession: statGenes['profession'],
       professions: professions,

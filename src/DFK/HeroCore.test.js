@@ -10,7 +10,7 @@ function getBasicHero() {
     info: {
       // blue gives +3 bonus
       // green gives +1 bonus
-      // This gives green: agility, blue endurance (this is from hero 222122)
+      // This gives green: agility, blue endurance (this is from hero 285959)
       statGenes: BigNumber.from('336706359480578615858112233749934675308832955261814047671642006997115136')
     },
     professions: {
