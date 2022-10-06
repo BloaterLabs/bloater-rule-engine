@@ -1,9 +1,9 @@
 export interface Professions {
-    fishing: number;
-    
-    foraging: number;
+  fishing: number;
 
-    gardening: number;
+  foraging: number;
 
-    mining: number;
+  gardening: number;
+
+  mining: number;
 }

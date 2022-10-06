@@ -1,6 +1,6 @@
 export const Profession = {
-    Mining: 0,
-    Gardening: 2,
-    Fishing: 4,
-    Foraging: 6
+  mining: 0,
+  gardening: 2,
+  fishing: 4,
+  foraging: 6
 } as const;

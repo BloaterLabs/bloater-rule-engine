@@ -1,28 +1,45 @@
-import { HeroStats } from "./HeroStats";
-import { HeroStatus } from "./HeroStatus";
-import { Profession } from "./Profession";
-import { Professions } from "./Professions";
+import { HeroStats } from './HeroStats';
+import { HeroStatus } from './HeroStatus';
+import { Profession } from './Profession';
+import { Professions } from './Professions';
+import { Stats } from './Stats';
 
 export interface Hero {
-    currentStamina: number;
+  /**
+   * Your heroes best stat for use in training. This takes into account the stat boosts you have as well.
+   */
+  bestTrainingStat: string;
 
-    id: number;
+  /**
+   * The highest stat value you have related to training quests. This is useful if you only want to send heroes that
+   * have a stat above a certain amount on a training quest.
+   */
+  bestTrainingStatValue: number;
 
-    maxStamina: number;
+  currentStamina: number;
 
-    name: string;
+  id: number;
 
-    //quest: string;
-    profession: typeof Profession;
+  maxStamina: number;
 
-    professions: Professions;
+  name: string;
 
-    questAddress: string;
+  profession: typeof Profession;
 
-    staminaFullAt: Date;
+  professions: Professions;
 
-    stats: HeroStats;
+  quest: string;
 
-    // todo: I think we're doing two different statuses here compared to what is on the original object.
-    status: HeroStatus;
+  questAddress: string;
+
+  staminaFullAt: Date;
+
+  statBoost1: typeof Stats;
+
+  statBoost2: typeof Stats;
+
+  stats: HeroStats;
+
+  // todo: I think we're doing two different statuses here compared to what is on the original object.
+  status: HeroStatus;
 }

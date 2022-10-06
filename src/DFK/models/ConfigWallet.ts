@@ -1,9 +1,9 @@
 export interface ConfigWallet {
-    address: string;
+  address: string;
 
-    chainId: number;
+  chainId: number;
 
-    rpc: string; //todo: probably should make this an array so we can loop through them if things fail.
+  rpc: string; //todo: probably should make this an array so we can loop through them if things fail.
 
-    walletPath: string;
+  walletPath: string;
 }

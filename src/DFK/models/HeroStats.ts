@@ -1,23 +1,23 @@
 export interface HeroStats {
-    agility: number;
+  agility: number;
 
-    dexterity: number;
+  dexterity: number;
 
-    endurance: number;
+  endurance: number;
 
-    hp: number;
+  hp: number;
 
-    intelligence: number;
+  intelligence: number;
 
-    luck: number;
+  luck: number;
 
-    mp: number;
+  mp: number;
 
-    stamina: number;
+  stamina: number;
 
-    strength: number;
+  strength: number;
 
-    vitality: number;
-    
-    wisdom: number;
+  vitality: number;
+
+  wisdom: number;
 }
