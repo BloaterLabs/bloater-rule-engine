@@ -447,6 +447,13 @@ export class DFKChainAddresses implements Addresses {
       name: 'Lesser Wit Crystal',
       decimals: 0,
       vendorValue: 0
+    },
+    {
+      address: '0xA37851cCE4B2b65c0b290AA4cC2DFF00314ec85a',
+      abbreviation: 'DFKETRNLSTY',
+      name: 'Pages of the Eternal Story',
+      decimals: 0,
+      vendorValue: 0
     }
   ];
 }
