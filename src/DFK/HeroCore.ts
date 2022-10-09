@@ -65,6 +65,7 @@ export class HeroCore {
       bestTrainingStatValue: bestTraining.value,
       currentStamina: this.getCurrentStamina(staminaFullAt, heroStats.stamina),
       id: heroId,
+      level: heroOriginal.state.level,
       name: `${heroOriginal.info.firstName} ${heroOriginal.info.lastName}`,
       profession: statGenes['profession'],
       professions: professions,
@@ -74,7 +75,9 @@ export class HeroCore {
       statBoost2: statGenes['statBoost2'],
       stats: heroStats,
       status: heroOriginal.state.status,
-      staminaFullAt: staminaFullAt
+      staminaFullAt: staminaFullAt,
+      xp: heroOriginal.state.xp,
+      xpToLevel: this.getXpToLevel(heroOriginal.state.level)
     };
 
     return hero;
@@ -162,6 +165,27 @@ export class HeroCore {
     return staminaLeft;
   }
 
+  private getXpToLevel(currentLevel: number): number {
+    const nextLevel = currentLevel + 1;
+
+    switch (true) {
+      case currentLevel < 6:
+        return nextLevel * 1000;
+      case currentLevel < 9:
+        return 4000 + (nextLevel - 5) * 2000;
+      case currentLevel < 16:
+        return 12000 + (nextLevel - 9) * 4000;
+      case currentLevel < 36:
+        return 40000 + (nextLevel - 16) * 5000;
+      case currentLevel < 56:
+        return 140000 + (nextLevel - 36) * 7500;
+      case currentLevel >= 56:
+        return 290000 + (nextLevel - 56) * 10000;
+      default:
+        return 0;
+    }
+  }
+
   private mapToGenes(genesStr: bigint, genesMap) {
     //console.log(genesStr);
     const rawKai = this.genesToKai(genesStr).split(' ').join('');
@@ -226,8 +250,8 @@ export class HeroCore {
     return out;
   }
 
-  private kai2dec = (kai) => {
+  private kai2dec(kai: string) {
     const ALPHABET = '123456789abcdefghijkmnopqrstuvwx';
     return ALPHABET.indexOf(kai);
-  };
+  }
 }

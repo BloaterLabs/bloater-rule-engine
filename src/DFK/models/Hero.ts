@@ -20,6 +20,8 @@ export interface Hero {
 
   id: number;
 
+  level: number;
+
   name: string;
 
   profession: typeof Profession;
@@ -40,4 +42,8 @@ export interface Hero {
 
   // todo: I think we're doing two different statuses here compared to what is on the original object.
   status: HeroStatus;
+
+  xp: number;
+
+  xpToLevel: number;
 }
