@@ -1,13 +1,13 @@
 import { ethers, Wallet } from 'ethers';
 import { Engine, Fact, RuleProperties } from 'json-rules-engine';
-import { QuestCore } from './DFK/QuestCore';
-import { HeroCore } from './DFK/HeroCore';
-import { Hero } from './DFK/models/Hero';
-import { Config } from './DFK/models/Config';
-import { Addresses } from './DFK/models/Addresses/Addresses';
-import { DFKChainAddresses } from './DFK/constants/DFKChainAddresses';
-import { Quest } from './DFK/models';
-import { ContractProvider } from './DFK/ContractProvider';
+import { QuestCore } from './DFK/QuestCore.js';
+import { HeroCore } from './DFK/HeroCore.js';
+import { Hero } from './DFK/models/Hero.js';
+import { Config } from './DFK/models/Config.js';
+import { Addresses } from './DFK/models/Addresses/Addresses.js';
+import { DFKChainAddresses } from './DFK/constants/DFKChainAddresses.js';
+import { Quest } from './DFK/models/index.js';
+import { ContractProvider } from './DFK/ContractProvider.js';
 
 export class Ruler {
   private questCore: QuestCore;

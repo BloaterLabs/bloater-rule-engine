@@ -1,4 +1,4 @@
-import { QuestAddresses } from './models/Addresses/QuestAddresses';
+import { QuestAddresses } from './models/Addresses/QuestAddresses.js';
 
 export class QuestHelper {
   /**

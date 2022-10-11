@@ -1,8 +1,4 @@
-import { HeroStats } from './HeroStats';
-import { HeroStatus } from './HeroStatus';
-import { Profession } from './Profession';
-import { Professions } from './Professions';
-import { Stats } from './Stats';
+import { HeroStats, HeroStatus, Profession, Professions, Stats } from './index.js';
 
 export interface Hero {
   /**

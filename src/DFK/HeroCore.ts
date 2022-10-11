@@ -1,9 +1,9 @@
 import { Contract } from 'ethers';
 
-import { GeneProperties } from './constants/GeneProperties';
-import { Hero, HeroStats, Professions, QuestAddresses } from './models';
-import { Stats } from './models/Stats';
-import { QuestHelper } from './QuestHelper';
+import { GeneProperties } from './constants/GeneProperties.js';
+import { Hero, HeroStats, Professions, QuestAddresses } from './models/index.js';
+import { Stats } from './models/Stats.js';
+import { QuestHelper } from './QuestHelper.js';
 
 export class HeroCore {
   private statGeneMap = {

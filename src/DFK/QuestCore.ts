@@ -1,9 +1,9 @@
 import { BigNumber, Contract, ContractReceipt, Event, Wallet } from 'ethers';
 
-import { Addresses } from './models/Addresses/Addresses';
-import { Quest, QuestReward } from './models';
-import { QuestHelper } from './QuestHelper';
-import { QuestFromContract } from './models/contracts/QuestFromContract';
+import { Addresses } from './models/Addresses/Addresses.js';
+import { Quest, QuestReward } from './models/index.js';
+import { QuestHelper } from './QuestHelper.js';
+import { QuestFromContract } from './models/contracts/QuestFromContract.js';
 
 export class QuestCore {
   constructor(private addresses: Addresses, private questCoreContract: Contract, private wallet: Wallet) {}
@@ -139,17 +139,20 @@ export class QuestCore {
     return quest;
   }
 
-  async startQuest(heroIds: BigNumber[], questAddress: string, attempts = 5, level = 0) {
+  async startQuest(heroIds: BigNumber[], questAddress: string, attempts = 5, level = 0): Promise<Quest> {
     try {
       const result = await this.questCoreContract
         .connect(this.wallet)
         .startQuest(heroIds, questAddress, attempts, level);
 
-      console.log(`start quest ${QuestHelper.getQuestName(this.addresses.questAddresses, questAddress)}`);
+      const questName = QuestHelper.getQuestName(this.addresses.questAddresses, questAddress);
+      console.log(`start ${heroIds.length} heroes on quest ${questName}, attempts: ${attempts}, level: ${level}`);
 
       const receipt = await this.getReceipt(result);
 
       console.log(`got receipt ${receipt.transactionHash}`);
+
+      return this.parseStartQuestReceipt(receipt);
     } catch (ex) {
       //console.log(ex);
       console.log(

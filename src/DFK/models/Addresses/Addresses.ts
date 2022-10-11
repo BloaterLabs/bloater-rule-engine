@@ -1,6 +1,6 @@
-import { Item } from '../Item';
-import { ContractAddresses } from './ContractAddresses';
-import { QuestAddresses } from './QuestAddresses';
+import { Item } from '../Item.js';
+import { ContractAddresses } from './ContractAddresses.js';
+import { QuestAddresses } from './QuestAddresses.js';
 
 export interface Addresses {
   readonly contractAddresses: ContractAddresses;

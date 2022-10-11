@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers';
-import { Item } from './Item';
+import { Item } from './Item.js';
 
 export interface QuestReward {
   heroId: BigNumber;

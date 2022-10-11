@@ -1,12 +1,13 @@
-import { Addresses } from '../models/Addresses/Addresses';
-import { ContractAddresses } from '../models/Addresses/ContractAddresses';
-import { QuestAddresses } from '../models/Addresses/QuestAddresses';
-import { Item } from '../models/Item';
+import { Addresses } from '../models/Addresses/Addresses.js';
+import { ContractAddresses } from '../models/Addresses/ContractAddresses.js';
+import { QuestAddresses } from '../models/Addresses/QuestAddresses.js';
+import { Item } from '../models/Item.js';
 
 export class DFKChainAddresses implements Addresses {
   contractAddresses: ContractAddresses = {
     eternalStory: '0xA37851cCE4B2b65c0b290AA4cC2DFF00314ec85a',
     heroCore: '0xEb9B61B145D6489Be575D3603F4a704810e143dF',
+    itemGoldTraderV2: '0x0f85fdf6c561C42d6b46d0E27ea6Aa9Bf9476B3f',
     questCoreV1: null,
     questCoreV2: '0xE9AbfBC143d7cef74b5b793ec5907fa62ca53154'
   };
@@ -46,6 +47,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0x04b9dA42306B023f3572e106B11D82aAd9D32EBb',
       abbreviation: 'CRYSTAL',
+      color: 'yellow',
       contract: 'inventoryItem',
       decimals: 18,
       name: 'Crystal',
@@ -62,6 +64,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0x4f60a160D8C2DDdaAfe16FCC57566dB84D674BD6',
       abbreviation: 'JEWEL',
+      color: 'yellow',
       decimals: 18,
       name: 'Jewel',
       vendorValue: 0
@@ -69,6 +72,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0xCCb93dABD71c8Dad03Fc4CE5559dC3D89F67a260',
       abbreviation: 'wJEWEL',
+      color: 'yellow',
       contract: 'inventoryItem',
       name: 'Jewel',
       vendorValue: 0,
@@ -85,6 +89,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0x576C260513204392F0eC0bc865450872025CB1cA',
       abbreviation: 'DFKGOLD',
+      color: 'grey',
       contract: 'inventoryItem',
       name: 'DFK Gold',
       vendorValue: 0,
@@ -127,7 +132,7 @@ export class DFKChainAddresses implements Addresses {
       abbreviation: 'DFKGLDVN',
       contract: 'inventoryItem',
       name: 'Goldvein',
-      vendorValue: 0,
+      vendorValue: 100,
       decimals: 0
     },
     {
@@ -144,7 +149,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Ragweed',
-      vendorValue: 0
+      vendorValue: 2.5
     },
     {
       address: '0x473A41e71618dD0709Ba56518256793371427d79',
@@ -184,7 +189,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Frost Drum',
-      vendorValue: 0
+      vendorValue: 2.5
     },
     {
       address: '0xBcdD90034eB73e7Aec2598ea9082d381a285f63b',
@@ -192,7 +197,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Knaproot',
-      vendorValue: 0
+      vendorValue: 15
     },
     {
       address: '0x80A42Dc2909C0873294c5E359e8DF49cf21c74E4',
@@ -200,7 +205,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Shaggy Caps',
-      vendorValue: 0
+      vendorValue: 100
     },
     {
       address: '0xc6030Afa09EDec1fd8e63a1dE10fC00E0146DaF3',
@@ -216,7 +221,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Bloater',
-      vendorValue: 0
+      vendorValue: 2.5
     },
     {
       address: '0x04B43D632F34ba4D4D72B0Dc2DC4B30402e5Cf88',
@@ -240,7 +245,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Redgill',
-      vendorValue: 0
+      vendorValue: 15
     },
     {
       address: '0x7f46E45f6e0361e7B9304f338404DA85CB94E33D',
@@ -264,7 +269,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Silverfin',
-      vendorValue: 0
+      vendorValue: 100
     },
     {
       address: '0x3bcb9A3DaB194C6D8D44B424AF383E7Db51C82BD',
@@ -272,7 +277,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Frost Bloater',
-      vendorValue: 0
+      vendorValue: 2.5
     },
     {
       address: '0xE7CB27ad646C49dC1671Cb9207176D864922C431',
@@ -280,7 +285,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Speckle Tail',
-      vendorValue: 0
+      vendorValue: 15
     },
     {
       address: '0x60A3810a3963f23Fa70591435bbe93BF8786E202',
@@ -288,7 +293,7 @@ export class DFKChainAddresses implements Addresses {
       contract: 'inventoryItem',
       decimals: 0,
       name: 'King Pincer',
-      vendorValue: 0
+      vendorValue: 100
     },
     {
       address: '0x6513757978E89e822772c16B60AE033781A29A4F',
@@ -317,6 +322,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0xa61Bac689AD6867a605633520D70C49e1dCce853',
       abbreviation: 'DFKBLUEEGG',
+      color: 'blue',
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Blue Pet Egg',
@@ -325,6 +331,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0x8D2bC53106063A37bb3DDFCa8CfC1D262a9BDCeB',
       abbreviation: 'DFKGREENEGG',
+      color: 'green',
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Green Pet Egg',
@@ -333,6 +340,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0x7E121418cC5080C96d967cf6A033B0E541935097',
       abbreviation: 'DFKGREGG',
+      color: 'grey',
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Grey Pet Egg',
@@ -341,6 +349,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0x72F860bF73ffa3FC42B97BbcF43Ae80280CFcdc3',
       abbreviation: 'DFKYELOWEGG',
+      color: 'yellow',
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Yellow Pet Egg',
@@ -349,6 +358,7 @@ export class DFKChainAddresses implements Addresses {
     {
       address: '0xf2D479DaEdE7F9e270a90615F8b1C52F3C487bC7',
       abbreviation: 'DFKGOLDEGG',
+      color: 'yellowBright',
       contract: 'inventoryItem',
       decimals: 0,
       name: 'Golden Egg',

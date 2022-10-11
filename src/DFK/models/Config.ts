@@ -1,4 +1,4 @@
-import { ConfigWallet } from './ConfigWallet';
+import { ConfigWallet } from './ConfigWallet.js';
 
 export interface Config {
   /**

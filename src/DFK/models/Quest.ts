@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers';
-import { QuestHelper } from '../QuestHelper';
-import { QuestAddresses } from './Addresses/QuestAddresses';
-import { QuestFromContract } from './contracts/QuestFromContract';
-import { QuestReward } from './QuestReward';
+import { QuestHelper } from '../QuestHelper.js';
+import { QuestAddresses } from './Addresses/QuestAddresses.js';
+import { QuestFromContract } from './contracts/QuestFromContract.js';
+import { QuestReward } from './QuestReward.js';
 
 export class Quest {
   address: string;

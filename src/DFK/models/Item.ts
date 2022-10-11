@@ -1,5 +1,6 @@
 export interface Item {
-  // color: string; // if we want to give a color for logs.
+  color?: string; // note: trying this out. I might remove, hasn't worked the best and might be better suited for clients to decide themselves.
+
   address: string;
 
   abbreviation: string;
@@ -16,6 +17,5 @@ export interface Item {
 
   uri?: number;
 
-  // quantity: number; // I think this might need to be a big number. Having this on an item feels weird but think it would be annoying keeping track elsewhere.
   vendorValue: number;
 }

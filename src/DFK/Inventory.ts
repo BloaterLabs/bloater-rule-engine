@@ -1,7 +1,7 @@
 import { BigNumber, Contract, ethers } from 'ethers';
 import { Provider } from '@ethersproject/providers';
-import { ContractProvider } from './ContractProvider';
-import { Item } from './models';
+import { ContractProvider } from './ContractProvider.js';
+import { Item } from './models/index.js';
 
 export class Inventory {
   constructor(private contractProvider: ContractProvider, private provider: Provider) {}
