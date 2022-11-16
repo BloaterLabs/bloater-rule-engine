@@ -1,4 +1,4 @@
-import { BigNumber, Contract, ContractReceipt, Event, Wallet } from 'ethers';
+import { BigNumber, Contract, ContractReceipt, Event, Signer } from 'ethers';
 
 import { Addresses } from './models/Addresses/Addresses.js';
 import { Quest, QuestReward } from './models/index.js';
@@ -6,11 +6,11 @@ import { QuestHelper } from './QuestHelper.js';
 import { QuestFromContract } from './models/contracts/QuestFromContract.js';
 
 export class QuestCore {
-  constructor(private addresses: Addresses, private questCoreContract: Contract, private wallet: Wallet) {}
+  constructor(private addresses: Addresses, private questCoreContract: Contract) {}
 
-  async completeQuest(heroId: BigNumber): Promise<Quest> {
+  async completeQuest(heroId: BigNumber, signer: Signer): Promise<Quest> {
     try {
-      const result = await this.questCoreContract.connect(this.wallet).completeQuest(heroId);
+      const result = await this.questCoreContract.connect(signer).completeQuest(heroId);
 
       console.log(`complete quest transaction submitted`);
 
@@ -18,6 +18,7 @@ export class QuestCore {
 
       const quest = this.parseQuestReceipt(receipt);
 
+      // todo: parse the result of this and log message with details similar to monitor but maybe not as much.
       console.log(`got complete quest receipt ${receipt.transactionHash}`);
 
       return quest;
@@ -139,11 +140,15 @@ export class QuestCore {
     return quest;
   }
 
-  async startQuest(heroIds: BigNumber[], questAddress: string, attempts = 5, level = 0): Promise<Quest> {
+  async startQuest(
+    heroIds: BigNumber[],
+    questAddress: string,
+    attempts: number,
+    level: number,
+    signer: Signer
+  ): Promise<Quest> {
     try {
-      const result = await this.questCoreContract
-        .connect(this.wallet)
-        .startQuest(heroIds, questAddress, attempts, level);
+      const result = await this.questCoreContract.connect(signer).startQuest(heroIds, questAddress, attempts, level);
 
       const questName = QuestHelper.getQuestName(this.addresses.questAddresses, questAddress);
       console.log(`start ${heroIds.length} heroes on quest ${questName}, attempts: ${attempts}, level: ${level}`);

@@ -36,7 +36,7 @@ export class Ruler {
     // maybe we should pass the contracts in instead of addresses and providers.
     const contractProvider = new ContractProvider(addresses.contractAddresses, provider);
 
-    this.questCore = new QuestCore(addresses, contractProvider.getQuestCoreContract(), wallet);
+    this.questCore = new QuestCore(addresses, contractProvider.getQuestCoreContract());
     this.heroCore = new HeroCore(addresses.questAddresses, contractProvider.getHeroCoreContract());
   }
 
@@ -121,7 +121,7 @@ export class Ruler {
         `completing ${completedQuest.name} quest for ${completedQuest.heroes} on ${completedQuest.completeAt}`
       );
 
-      await this.questCore.completeQuest(completedQuest.heroes[0]);
+      await this.questCore.completeQuest(completedQuest.heroes[0], wallet);
     }
   }
 

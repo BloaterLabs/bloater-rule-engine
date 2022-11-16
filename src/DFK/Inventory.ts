@@ -16,8 +16,8 @@ export class Inventory {
         itemContract = this.contractProvider.getEternalStoryContract();
         balance = await itemContract.balanceOf(walletAddress, item.uri);
         break;
-      case 'inventoryitem':
-        itemContract = this.contractProvider.getItemContract(item.address);
+      case 'erc20':
+        itemContract = this.contractProvider.getERC20Contract(item.address);
         balance = await itemContract.balanceOf(walletAddress);
         break;
       default:
@@ -25,6 +25,7 @@ export class Inventory {
         break;
     }
 
+    // todo: I'm thinking we probably don't want to format this here and send out the bigNumber.
     return ethers.utils.formatUnits(balance, item.decimals);
   }
 
@@ -40,5 +41,10 @@ export class Inventory {
 
       return itemBalances;
     });
+  }
+
+  async getTotalSupply(itemAddress: string): Promise<number> {
+    // todo: fix yo.
+    return 0;
   }
 }
