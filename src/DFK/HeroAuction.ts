@@ -3,6 +3,15 @@ import { BigNumber, Contract, Signer } from 'ethers';
 export class HeroAuction {
   constructor(private heroAuctionContract: Contract) {}
 
+  async buyHero(signer: Signer, tokenId: BigNumber, amount: BigNumber) {
+    const result = await this.heroAuctionContract.connect(signer).bid(tokenId, amount);
+
+    await result.wait();
+
+    // todo: let's get something better to log or not log at all.
+    console.log(`bought hero ${tokenId}`);
+  }
+
   async cancelAuction(signer: Signer, tokenId: BigNumber) {
     const result = await this.heroAuctionContract.connect(signer).cancelAuction(tokenId);
 
@@ -47,6 +56,12 @@ export class HeroAuction {
 
     // todo: let's get something better to log.
     console.log(`created auction`);
+  }
+
+  async getCurrentPrice(tokenId: BigNumber): Promise<BigNumber> {
+    const result = await this.heroAuctionContract.getCurrentPrice(tokenId);
+
+    return result;
   }
 
   async getUserAuctions(address: string): Promise<BigNumber[]> {
