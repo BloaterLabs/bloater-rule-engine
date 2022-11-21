@@ -1,7 +1,8 @@
 import { Contract } from 'ethers';
 
 import { GeneProperties } from './constants/GeneProperties.js';
-import { Hero, HeroStats, Professions, QuestAddresses } from './models/index.js';
+import { Hero, HeroStatGrowth, HeroStatGrowthPicks, HeroStats, Professions, QuestAddresses } from './models/index.js';
+import { StatGrowth } from './models/StatGrowth.js';
 import { Stats } from './models/Stats.js';
 import { QuestHelper } from './QuestHelper.js';
 
@@ -60,6 +61,9 @@ export class HeroCore {
     // Get the best training quest and stat
     const bestTraining = this.getBestTraining(heroStats, statGenes['statBoost1'], statGenes['statBoost2']);
 
+    const primaryStatGrowth: HeroStatGrowth = this.getHeroStatGrowth(heroOriginal.primaryStatGrowth);
+    const secondaryStatGrowth: HeroStatGrowth = this.getHeroStatGrowth(heroOriginal.secondaryStatGrowth);
+
     const hero: Hero = {
       bestTrainingStat: bestTraining.stat,
       bestTrainingStatValue: bestTraining.value,
@@ -67,10 +71,12 @@ export class HeroCore {
       id: heroId,
       level: heroOriginal.state.level,
       name: `${heroOriginal.info.firstName} ${heroOriginal.info.lastName}`,
+      primaryStatGrowth: primaryStatGrowth,
       profession: statGenes['profession'],
       professions: professions,
       quest: QuestHelper.getQuestName(this.questAddresses, heroOriginal.state.currentQuest),
       questAddress: heroOriginal.state.currentQuest,
+      secondaryStatGrowth: secondaryStatGrowth,
       statBoost1: statGenes['statBoost1'],
       statBoost2: statGenes['statBoost2'],
       stats: heroStats,
@@ -116,6 +122,7 @@ export class HeroCore {
 
   private getBestTraining(heroStats: HeroStats, statBoost1: typeof Stats, statBoost2: typeof Stats) {
     const ignoredStat = ['hp', 'mp', 'stamina'];
+
     let bestStat = 'vitality';
     let bestStatValue = 0;
 
@@ -163,6 +170,27 @@ export class HeroCore {
     const staminaLeft = maxStamina - Math.ceil(millisecondsToFull / millisecondsPerStamina);
 
     return staminaLeft;
+  }
+
+  private getHeroStatGrowth(originalStatGrowth): HeroStatGrowth {
+    const statGrowth: HeroStatGrowth = {
+      agility: originalStatGrowth.agility,
+      dexterity: originalStatGrowth.dexterity,
+      endurance: originalStatGrowth.endurance,
+      hpLarge: originalStatGrowth.hpLg,
+      hpRegular: originalStatGrowth.hpRg,
+      hpSmall: originalStatGrowth.hpSm,
+      intelligence: originalStatGrowth.intelligence,
+      luck: originalStatGrowth.luck,
+      mpLarge: originalStatGrowth.mpLg,
+      mpRegular: originalStatGrowth.mpRg,
+      mpSmall: originalStatGrowth.mpSm,
+      strength: originalStatGrowth.strength,
+      vitality: originalStatGrowth.vitality,
+      wisdom: originalStatGrowth.wisdom
+    };
+
+    return statGrowth;
   }
 
   private getXpToLevel(currentLevel: number): number {

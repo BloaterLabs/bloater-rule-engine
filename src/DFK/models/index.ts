@@ -1,4 +1,6 @@
 export { Hero } from './Hero.js';
+export { HeroStatGrowth } from './HeroStatGrowth.js';
+export { HeroStatGrowthPicks } from './HeroStatGrowthPicks.js';
 export { HeroStats } from './HeroStats.js';
 export { HeroStatus } from './HeroStatus.js';
 export { Item } from './Item.js';

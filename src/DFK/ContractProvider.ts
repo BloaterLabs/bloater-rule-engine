@@ -7,6 +7,7 @@ import heroCoreAbi = require('./abis/HeroCore.json');
 import erc20Abi = require('../erctokens/abis/ERC20.json');
 import eternalStoryAbi = require('./abis/EternalStory.json');
 import itemGoldTraderAbi = require('./abis/ItemGoldTraderV2.json');
+import meditationCircleAbi = require('./abis/MeditationCircle.json');
 import uniswapv2FactoryAbi = require('../uniswap/abis/Uniswapv2Factory.json');
 import uniswapv2RouterAbi = require('../uniswap/abis/Uniswapv2Router.json');
 
@@ -45,6 +46,16 @@ export class ContractProvider {
     );
 
     return itemGoldTraderContract;
+  }
+
+  getMeditationCircleContract(): Contract {
+    const meditationCircleContract = new Contract(
+      this.contractAddresses.meditationCircle,
+      meditationCircleAbi,
+      this.provider
+    );
+
+    return meditationCircleContract;
   }
 
   getQuestCoreContract(): Contract {

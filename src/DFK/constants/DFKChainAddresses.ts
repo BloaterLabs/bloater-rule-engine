@@ -9,11 +9,14 @@ export class DFKChainAddresses implements Addresses {
     heroAuction: '0xc390fAA4C7f66E4D62E59C231D5beD32Ff77BEf0',
     heroCore: '0xEb9B61B145D6489Be575D3603F4a704810e143dF',
     itemGoldTraderV2: '0x0f85fdf6c561C42d6b46d0E27ea6Aa9Bf9476B3f',
+    meditationCircle: '0xD507b6b299d9FC835a0Df92f718920D13fA49B47',
     questCoreV1: null,
     questCoreV2: '0xE9AbfBC143d7cef74b5b793ec5907fa62ca53154',
     uniswapV2Factory: '0x794C07912474351b3134E6D6B3B7b3b4A07cbAAa',
     uniswapV2Router: '0x3C351E1afdd1b1BC44e931E12D4E05D6125eaeCa'
   };
+
+  none = '0x0000000000000000000000000000000000000000';
 
   questAddresses: QuestAddresses = {
     none: '0x0000000000000000000000000000000000000000',

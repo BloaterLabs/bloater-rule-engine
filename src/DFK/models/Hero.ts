@@ -1,3 +1,4 @@
+import { HeroStatGrowth } from './HeroStatGrowth.js';
 import { HeroStats, HeroStatus, Profession, Professions, Stats } from './index.js';
 
 export interface Hero {
@@ -20,6 +21,8 @@ export interface Hero {
 
   name: string;
 
+  primaryStatGrowth: HeroStatGrowth;
+
   profession: typeof Profession;
 
   professions: Professions;
@@ -27,6 +30,8 @@ export interface Hero {
   quest: string;
 
   questAddress: string;
+
+  secondaryStatGrowth: HeroStatGrowth;
 
   staminaFullAt: Date;
 

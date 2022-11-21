@@ -4,6 +4,7 @@ export {
   HeroAuction,
   HeroCore,
   Inventory,
+  MeditationCircle,
   Profession,
   QuestCore,
   Vendor,
