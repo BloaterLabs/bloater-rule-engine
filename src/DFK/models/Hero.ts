@@ -1,5 +1,4 @@
-import { HeroStatGrowth } from './HeroStatGrowth.js';
-import { HeroStats, HeroStatus, Profession, Professions, Stats } from './index.js';
+import { HeroClass, HeroStats, HeroStatGrowth, HeroStatus, Profession, Professions, Rarity, Stats } from './index.js';
 
 export interface Hero {
   /**
@@ -13,11 +12,17 @@ export interface Hero {
    */
   bestTrainingStatValue: number;
 
+  class: typeof HeroClass;
+
   currentStamina: number;
+
+  generation: number;
 
   id: number;
 
   level: number;
+
+  maxSummons: number;
 
   name: string;
 
@@ -31,6 +36,10 @@ export interface Hero {
 
   questAddress: string;
 
+  rarity: typeof Rarity;
+
+  remainingSummons: number;
+
   secondaryStatGrowth: HeroStatGrowth;
 
   staminaFullAt: Date;
@@ -43,6 +52,10 @@ export interface Hero {
 
   // todo: I think we're doing two different statuses here compared to what is on the original object.
   status: HeroStatus;
+
+  subClass: typeof HeroClass;
+
+  summons: number;
 
   xp: number;
 

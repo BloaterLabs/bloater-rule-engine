@@ -69,4 +69,25 @@ export class HeroAuction {
 
     return result;
   }
+
+  onAuctionCreated(
+    callback: (
+      auctionId: BigNumber,
+      owner: string,
+      tokenId: BigNumber,
+      startingPrice: BigNumber,
+      endingPrice: BigNumber,
+      duration: number,
+      winner: string
+    ) => void
+  ): void {
+    const filterQuestStarted = this.heroAuctionContract.filters.AuctionCreated(null);
+
+    this.heroAuctionContract.on(
+      filterQuestStarted,
+      async (auctionId, owner, heroId, startingPrice, endingPrice, duration, winner) => {
+        callback(auctionId, owner, heroId, startingPrice, endingPrice, duration, winner);
+      }
+    );
+  }
 }
