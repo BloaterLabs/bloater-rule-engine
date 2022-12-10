@@ -7,3 +7,4 @@ export { QuestCore } from './QuestCore.js';
 export { Vendor } from './Vendor.js';
 export { WalletHelper } from './WalletHelper.js';
 export { HeroClass, Rarity, Profession } from './models/index.js';
+export { DFKChainAddresses, KlayAddresses } from './constants/index.js';

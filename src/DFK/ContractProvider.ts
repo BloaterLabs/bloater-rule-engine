@@ -14,7 +14,7 @@ import uniswapv2RouterAbi = require('../uniswap/abis/Uniswapv2Router.json');
 export class ContractProvider {
   constructor(private contractAddresses: ContractAddresses, private provider: Provider) {}
 
-  getERC20Contract(tokenAddress): Contract {
+  getERC20Contract(tokenAddress: string): Contract {
     const ercContract = new Contract(tokenAddress, erc20Abi, this.provider);
 
     return ercContract;

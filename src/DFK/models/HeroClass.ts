@@ -12,12 +12,16 @@ export const HeroClass = {
   pirate: 7,
   berserker: 8,
   seer: 9,
+  legionnaire: 10,
+  scholar: 11,
   paladin: 16,
   darkKnight: 17,
   summoner: 18,
   ninja: 19,
   shapeshifter: 20,
+  bard: 21,
   dragoon: 24,
   sage: 25,
+  spellbow: 26,
   dreadKnight: 28
 } as const;

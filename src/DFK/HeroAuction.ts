@@ -6,6 +6,8 @@ export class HeroAuction {
   async buyHero(signer: Signer, tokenId: BigNumber, amount: BigNumber) {
     const result = await this.heroAuctionContract.connect(signer).bid(tokenId, amount);
 
+    // this.heroAuctionContract.populateTransaction()
+
     await result.wait();
 
     // todo: let's get something better to log or not log at all.
@@ -58,6 +60,12 @@ export class HeroAuction {
     console.log(`created auction`);
   }
 
+  async getAuction(tokenId: BigNumber): Promise<any> {
+    const result = await this.heroAuctionContract.getAuction(tokenId);
+
+    return result;
+  }
+
   async getCurrentPrice(tokenId: BigNumber): Promise<BigNumber> {
     const result = await this.heroAuctionContract.getCurrentPrice(tokenId);
 
@@ -68,6 +76,16 @@ export class HeroAuction {
     const result = await this.heroAuctionContract.getUserAuctions(address);
 
     return result;
+  }
+
+  onAuctionSuccessful(
+    callback: (auctionId: BigNumber, heroId: BigNumber, price: BigNumber, winner: string) => void
+  ): void {
+    const filterAuctionSuccessful = this.heroAuctionContract.filters.AuctionSuccessful();
+
+    this.heroAuctionContract.on(filterAuctionSuccessful, async (auctionId, heroId, price, winner) => {
+      callback(auctionId, heroId, price, winner);
+    });
   }
 
   onAuctionCreated(
@@ -81,10 +99,10 @@ export class HeroAuction {
       winner: string
     ) => void
   ): void {
-    const filterQuestStarted = this.heroAuctionContract.filters.AuctionCreated(null);
+    const filterAuctionCreated = this.heroAuctionContract.filters.AuctionCreated();
 
     this.heroAuctionContract.on(
-      filterQuestStarted,
+      filterAuctionCreated,
       async (auctionId, owner, heroId, startingPrice, endingPrice, duration, winner) => {
         callback(auctionId, owner, heroId, startingPrice, endingPrice, duration, winner);
       }

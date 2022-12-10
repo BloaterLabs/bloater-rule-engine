@@ -9,21 +9,16 @@ export class QuestCore {
   constructor(private addresses: Addresses, private questCoreContract: Contract) {}
 
   async completeQuest(heroId: BigNumber, signer: Signer): Promise<Quest> {
+    // do we want the try catch in here?
     try {
       const result = await this.questCoreContract.connect(signer).completeQuest(heroId);
-
-      console.log(`complete quest transaction submitted`);
 
       const receipt = await this.getReceipt(result);
 
       const quest = this.parseQuestReceipt(receipt);
 
-      // todo: parse the result of this and log message with details similar to monitor but maybe not as much.
-      console.log(`got complete quest receipt ${receipt.transactionHash}`);
-
       return quest;
     } catch (ex) {
-      //console.log(ex);
       console.log(
         `Error completing quest Code: ${ex.error?.code}, Reason: ${ex.error?.reason}, Method: ${ex.error?.method}`
       );
@@ -265,7 +260,7 @@ export class QuestCore {
 
       return receipt;
     } catch (ex) {
-      console.log(`getReceipt failed for ${tx.hash}`, ex, tx);
+      console.log(`getReceipt failed for ${tx.hash}`, ex);
     }
   }
 }

@@ -9,5 +9,8 @@ export const StatGrowth = {
   luck: 4,
   vitality: 5,
   endurance: 6,
-  dexterity: 7
+  dexterity: 7,
+  hp: 8,
+  mp: 9,
+  stamina: 10
 } as const;

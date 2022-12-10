@@ -1,14 +1,13 @@
 import { BigNumber, Contract, ContractReceipt, Signer } from 'ethers';
 import { HeroStatGrowth } from './models/HeroStatGrowth.js';
 import { HeroStatGrowthPicks } from './models/HeroStatGrowthPicks.js';
+import { MeditationResult } from './models/index.js';
 import { StatGrowth } from './models/StatGrowth.js';
 
 export class MeditationCircle {
   constructor(private meditationCircleContract: Contract) {}
 
   async completeMeditation(signer: Signer, heroId: BigNumber) {
-    console.log(`completing meditation for ${heroId}`);
-
     // submit the transaction
     const result = await this.meditationCircleContract.connect(signer).completeMeditation(heroId);
 
@@ -20,6 +19,12 @@ export class MeditationCircle {
     return meditationResult;
   }
 
+  async getActiveMeditations(address: string) {
+    const results = await this.meditationCircleContract.getActiveMeditations(address);
+
+    return results.map((r) => r.heroId);
+  }
+
   getBestGrowthStats(statGrowth: HeroStatGrowth): HeroStatGrowthPicks {
     const ignoredGrowthStats = ['hpSm', 'hpRg', 'hpLg', 'mpSm', 'mpRg', 'mpLg'];
 
@@ -28,24 +33,46 @@ export class MeditationCircle {
     const statArraySorted = statArray.sort((a, b) => b[1] - a[1]);
 
     return {
-      primaryStatGrowth: StatGrowth[statArraySorted[0][0]],
-      secondaryStatGrowth: StatGrowth[statArraySorted[1][0]],
-      tertiaryStatGrowth: StatGrowth[statArraySorted[2][0]]
+      primary: StatGrowth[statArraySorted[0][0]],
+      secondary: StatGrowth[statArraySorted[1][0]],
+      tertiary: StatGrowth[statArraySorted[2][0]]
     };
   }
 
-  parseCompleteMeditationReceipt(receipt: ContractReceipt) {
+  parseCompleteMeditationReceipt(receipt: ContractReceipt): MeditationResult {
+    const meditationResult: MeditationResult = {
+      statsUp: {
+        hp: 0,
+        mp: 0,
+        stamina: 0,
+        agility: 0,
+        dexterity: 0,
+        endurance: 0,
+        intelligence: 0,
+        luck: 0,
+        strength: 0,
+        vitality: 0,
+        wisdom: 0
+      },
+      statsOld: undefined,
+      statsNew: undefined
+    };
+
     receipt.logs.forEach((log) => {
       if (log.topics.indexOf(this.meditationCircleContract.interface.getEventTopic('LevelUp')) >= 0) {
         const event = this.meditationCircleContract.interface.parseLog(log);
 
-        console.log('LevelUp Event', event.args.hero.stats, event.args.oldHero.stats);
+        meditationResult.statsNew = event.args.hero.stats;
+        meditationResult.statsOld = event.args.oldHero.stats;
       } else if (log.topics.indexOf(this.meditationCircleContract.interface.getEventTopic('StatUp')) >= 0) {
         const event = this.meditationCircleContract.interface.parseLog(log);
 
-        console.log(`StatUp Event stat: ${event.args.stat}, increase: ${event.args.increase}`);
+        const statUp = Object.entries(StatGrowth).find((sg) => sg[1] == event.args.stat);
+        meditationResult.statsUp[statUp[0]] += event.args.increase;
       }
     });
+
+    return meditationResult;
   }
 
   /**
@@ -65,16 +92,10 @@ export class MeditationCircle {
     tertiaryStat: number,
     attunementCrystal: string
   ) {
-    console.log(
-      `primaryStat: ${primaryStat}, secondaryStat: ${secondaryStat}, tertiaryStat: ${tertiaryStat}, attunementCrystal: ${attunementCrystal}`
-    );
-
     // submit transaction
     const result = await this.meditationCircleContract
       .connect(signer)
       .startMeditation(heroId, primaryStat, secondaryStat, tertiaryStat, attunementCrystal);
-
-    console.log(`submitted start meditation waiting for receipt`);
 
     // wait for receipt
     await result.wait();

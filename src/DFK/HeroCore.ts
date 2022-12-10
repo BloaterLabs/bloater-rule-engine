@@ -1,8 +1,7 @@
 import { Contract } from 'ethers';
 
 import { GeneProperties } from './constants/GeneProperties.js';
-import { Hero, HeroStatGrowth, HeroStatGrowthPicks, HeroStats, Professions, QuestAddresses } from './models/index.js';
-import { StatGrowth } from './models/StatGrowth.js';
+import { Hero, HeroStatGrowth, HeroStats, Professions, QuestAddresses } from './models/index.js';
 import { Stats } from './models/Stats.js';
 import { QuestHelper } from './QuestHelper.js';
 

@@ -1,5 +1,5 @@
 export class HeroStatGrowthPicks {
-  primaryStatGrowth: number;
-  secondaryStatGrowth: number;
-  tertiaryStatGrowth: number;
+  primary: number;
+  secondary: number;
+  tertiary: number;
 }
