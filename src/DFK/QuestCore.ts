@@ -9,20 +9,13 @@ export class QuestCore {
   constructor(private addresses: Addresses, private questCoreContract: Contract) {}
 
   async completeQuest(heroId: BigNumber, signer: Signer): Promise<Quest> {
-    // do we want the try catch in here?
-    try {
-      const result = await this.questCoreContract.connect(signer).completeQuest(heroId);
+    const result = await this.questCoreContract.connect(signer).completeQuest(heroId);
 
-      const receipt = await this.getReceipt(result);
+    const receipt = await result.wait();
 
-      const quest = this.parseQuestReceipt(receipt);
+    const quest = this.parseQuestReceipt(receipt);
 
-      return quest;
-    } catch (ex) {
-      console.log(
-        `Error completing quest Code: ${ex.error?.code}, Reason: ${ex.error?.reason}, Method: ${ex.error?.method}`
-      );
-    }
+    return quest;
   }
 
   async getActiveQuests(address: string): Promise<Quest[]> {
@@ -142,23 +135,16 @@ export class QuestCore {
     level: number,
     signer: Signer
   ): Promise<Quest> {
-    try {
-      const result = await this.questCoreContract.connect(signer).startQuest(heroIds, questAddress, attempts, level);
+    const result = await this.questCoreContract.connect(signer).startQuest(heroIds, questAddress, attempts, level);
 
-      const questName = QuestHelper.getQuestName(this.addresses.questAddresses, questAddress);
-      console.log(`start ${heroIds.length} heroes on quest ${questName}, attempts: ${attempts}, level: ${level}`);
+    const questName = QuestHelper.getQuestName(this.addresses.questAddresses, questAddress);
+    console.log(`start ${heroIds.length} heroes on quest ${questName}, attempts: ${attempts}, level: ${level}`);
 
-      const receipt = await this.getReceipt(result);
+    const receipt = await result.wait();
 
-      console.log(`got receipt ${receipt.transactionHash}`);
+    console.log(`got receipt ${receipt.transactionHash}`);
 
-      return this.parseStartQuestReceipt(receipt);
-    } catch (ex) {
-      //console.log(ex);
-      console.log(
-        `Error starting quest Code: ${ex.error?.code}, Reason: ${ex.error?.reason}, Method: ${ex.error?.method}`
-      );
-    }
+    return this.parseStartQuestReceipt(receipt);
   }
 
   onQuestCompleted(address: string, callback: (quest: Quest) => void): void {
@@ -251,16 +237,5 @@ export class QuestCore {
     }
 
     return reward;
-  }
-
-  private async getReceipt(tx): Promise<ContractReceipt> {
-    try {
-      // todo: need to figure out a better way to handle these when they seem to wait for a long time.
-      const receipt = await tx.wait();
-
-      return receipt;
-    } catch (ex) {
-      console.log(`getReceipt failed for ${tx.hash}`, ex);
-    }
   }
 }

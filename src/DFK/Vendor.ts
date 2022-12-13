@@ -23,20 +23,13 @@ export class Vendor {
   }
 
   async sellItem(signer: Signer, itemAddress: string, quantity: number): Promise<void> {
-    try {
-      const result = await this.itemGoldTraderContract.connect(signer).sellItem(itemAddress, quantity);
+    const result = await this.itemGoldTraderContract.connect(signer).sellItem(itemAddress, quantity);
 
-      console.log(`sell item transaction submitted`);
+    console.log(`sell item transaction submitted`);
 
-      const receipt = await result.wait();
+    const receipt = await result.wait();
 
-      console.log(`got sell item receipt ${receipt.transactionHash}`);
-    } catch (ex) {
-      //console.log(ex);
-      console.log(
-        `Error selling item Code: ${ex.error?.code}, Reason: ${ex.error?.reason}, Method: ${ex.error?.method}`
-      );
-    }
+    console.log(`got sell item receipt ${receipt.transactionHash}`);
   }
 
   private toVendorItem(tradeItem): VendorItem {
