@@ -11,12 +11,17 @@ export interface QuestAddresses {
   gardeningCrystalKlay: string;
   gardeningCrystalUsdc: string;
   gardeningEthUsdc: string;
+  gardeningJadeAvax: string;
+  gardeningJadeBtc: string;
+  gardeningJadeEth: string;
+  gardeningJadeJewel: string;
+  gardeningJadeKlay: string;
+  gardeningJadeUsdt: string;
   gardeningJewelAvax: string;
   gardeningJewelBtc: string;
   gardeningJewelEth: string;
   gardeningJewelKlay: string;
   gardeningJewelUsdc: string;
-  gardeningJewelXJewel: string;
   miningGold: string;
   miningLocked: string;
   wishingWell: string;
